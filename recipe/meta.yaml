@@ -1,5 +1,5 @@
 {% set name = "portalocker" %}
-{% set version = "2.3.0" %}
+{% set version = "3.0.0" %}
 
 package:
   name: {{ name|lower }}
@@ -8,11 +8,12 @@ package:
 source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 4e913d807aa6598c320e8a50c50e2ee0602bc45240b485e3f8bc06f13060084c
+  sha256: 21f535de2e7a82c94c130c054adb5c7421d480d5619d61073996e2f89bcb879b
 
 build:
   number: 1
   script: {{ PYTHON }} -m pip install . --no-deps -vv
+  skip: true  # [py<38 or py>312]
 
 requirements:
   host:
@@ -33,7 +34,7 @@ test:
     - pytest-cache >=1.0
     - pytest-cov >=2.5.1
     - pytest-flakes >=2.0.0
-    - pytest-pep8 >=1.0.6
+    #- pytest-pep8 >=1.0.6
   # TODO: how to skip just test_combined ?
   # commands:
   #  - pytest -k "not test_combined" portalocker_tests
