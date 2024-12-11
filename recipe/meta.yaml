@@ -11,33 +11,28 @@ source:
   sha256: 21f535de2e7a82c94c130c054adb5c7421d480d5619d61073996e2f89bcb879b
 
 build:
-  number: 1
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
-  skip: true  # [py<38 or py>312]
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  skip: true  # [py<39]
 
 requirements:
   host:
     - python
     - pip
     - pytest-runner
+    - setuptools
+    - setuptoools-scm 
   run:
     - python
-    - pywin32  # [win]
+    - pywin32 >=226  # [win]
 
 test:
   imports:
     - portalocker
-  source_files:
-    - portalocker_tests
   requires:
-    - pytest >=3.4.0
-    - pytest-cache >=1.0
-    - pytest-cov >=2.5.1
-    - pytest-flakes >=2.0.0
-    #- pytest-pep8 >=1.0.6
-  # TODO: how to skip just test_combined ?
-  # commands:
-  #  - pytest -k "not test_combined" portalocker_tests
+    - pip
+  commands:
+    - pip check
 
 about:
   home: https://github.com/WoLpH/portalocker
