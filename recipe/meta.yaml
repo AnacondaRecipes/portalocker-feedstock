@@ -21,7 +21,8 @@ requirements:
     - pip
     - pytest-runner
     - setuptools
-    - setuptoools-scm 
+    - setuptools_scm
+    - wheel
   run:
     - python
     - pywin32 >=226  # [win]
