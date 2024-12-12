@@ -19,7 +19,6 @@ requirements:
   host:
     - python
     - pip
-    - pytest-runner
     - setuptools
     - setuptools_scm
     - wheel
@@ -35,7 +34,7 @@ test:
   requires:
     - pip
     - pytest
-    - redis
+    - redis-py
   commands:
     - pip check
     - pytest -v portalocker_tests --ignore=portalocker_tests/test_combined.py
