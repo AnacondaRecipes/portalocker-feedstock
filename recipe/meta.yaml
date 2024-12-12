@@ -46,6 +46,8 @@ about:
   license_family: PSF
   license_file: LICENSE
   summary: Portalocker is a library to provide an easy API to file locking.
+  description: |
+    An easy library for Python file locking. It works on Windows, Linux, BSD and Unix systems and can even perform distributed locking. Naturally it also supports the with statement.
   doc_url: https://portalocker.readthedocs.org
   dev_url: https://github.com/WoLpH/portalocker
 
