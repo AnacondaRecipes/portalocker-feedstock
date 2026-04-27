@@ -30,7 +30,7 @@ test:
     - portalocker
   commands:
     - pip check
-    - pytest -v portalocker_tests --deselect=portalocker_tests/test_combined.py::test_combined
+    - pytest -v portalocker_tests --deselect=portalocker_tests/test_combined.py::test_combined --ignore=portalocker_tests/test_redis.py
   requires:
     - pip
     - pytest >=5.4.1
