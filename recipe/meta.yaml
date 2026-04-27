@@ -2,41 +2,41 @@
 {% set version = "2.3.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 4e913d807aa6598c320e8a50c50e2ee0602bc45240b485e3f8bc06f13060084c
 
 build:
-  number: 1
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  number: 2
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   host:
     - python
     - pip
-    - pytest-runner
+    - wheel
+    - setuptools >=38.3.0
   run:
     - python
-    - pywin32  # [win]
+    - pywin32 !=226  # [win]
 
 test:
-  imports:
-    - portalocker
   source_files:
     - portalocker_tests
+  imports:
+    - portalocker
+  commands:
+    - pip check
+    - pytest -v portalocker_tests --deselect=portalocker_tests/test_combined.py::test_combined --ignore=portalocker_tests/test_redis.py
   requires:
-    - pytest >=3.4.0
-    - pytest-cache >=1.0
-    - pytest-cov >=2.5.1
-    - pytest-flakes >=2.0.0
-    - pytest-pep8 >=1.0.6
-  # TODO: how to skip just test_combined ?
-  # commands:
-  #  - pytest -k "not test_combined" portalocker_tests
+    - pip
+    - pytest >=5.4.1
+    - pytest-cov >=2.8.1
+    - pytest-flakes >=1.0.5
+    - redis
 
 about:
   home: https://github.com/WoLpH/portalocker
