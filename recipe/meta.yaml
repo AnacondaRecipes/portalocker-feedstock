@@ -1,11 +1,8 @@
 {% set name = "portalocker" %}
 {% set version = "4.1.0" %}
-{% set deselect_tests = " --deselect=portalocker_tests/test_combined.py::test_combined" %}
 
-# Won`t copy README.rst to the sp_dir:
-# E       FileNotFoundError: [Errno 2] No such file or directory: '$PREFIX/lib/python3.10/site-packages/README.rst'
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
@@ -21,15 +18,19 @@ requirements:
   host:
     - python
     - pip
-    - setuptools
-    - setuptools_scm
-    - wheel
-    - uv_build >=0.11,<0.13
+    - uv-build >=0.11,<0.13
   run:
     - python
     - pywin32 >=226  # [win]
   run_constrained:
+    # redis
     - redis-py >=5.0
+
+# Won`t copy README.rst to the sp_dir:
+# E       FileNotFoundError: [Errno 2] No such file or directory: '$PREFIX/lib/python3.10/site-packages/README.rst'
+{% set deselect_tests = " --deselect=portalocker_tests/test_combined.py::test_combined" %}
+{% set deselect_tests = deselect_tests + " --deselect=portalocker_tests/test_combined.py::test_combine_uses_sys_executable" %}
+{% set deselect_tests = deselect_tests +" --deselect=portalocker_tests/test_combined.py::test_build_extra_creates_versioned_dist" %}
 
 test:
   source_files:
@@ -43,6 +44,7 @@ test:
     - pip
     - pytest >=5.4.1
     - redis-py
+    - fakeredis >=2.31.0
 
 about:
   home: https://github.com/WoLpH/portalocker
